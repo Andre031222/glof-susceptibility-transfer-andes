@@ -1,10 +1,10 @@
-# How far does a GLOF susceptibility model travel? Transfer tests across the Andes
+# Limits to the spatial transferability of a glacial lake outburst flood susceptibility model across the Andes
 
 [![Status](https://img.shields.io/badge/Status-Manuscript_in_preparation-1565C0?style=flat-square)](#status)
 [![License: MIT](https://img.shields.io/badge/License-MIT-337AB7?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![R](https://img.shields.io/badge/Figures-R_%2F_ggplot2-276DC3?style=flat-square&logo=r&logoColor=white)](https://www.r-project.org/)
-[![Events: GLOF database v4.2](https://img.shields.io/badge/Events-GLOF_database_v4.2-0B7A75?style=flat-square)](https://doi.org/10.5281/zenodo.7330344)
+[![Events: GLOF database v4.2](https://img.shields.io/badge/Events-GLOF_database_v4.2-0B7A75?style=flat-square)](https://doi.org/10.5281/zenodo.23370149)
 
 Open pipeline that builds an annual glacial lake inventory for 13 Andean areas from
 Landsat (1985-2016) and Sentinel-2 (2017-2025) under one set of criteria, and tests
@@ -16,7 +16,7 @@ and years holds in others.
 ## Status
 
 The full pipeline was run on 1-2 November 2026 and produces every number, table and
-figure of the manuscript prepared for *Natural Hazards*. Numbers from earlier versions
+figure of the manuscript prepared for *Computers and Electronics in Agriculture*. Numbers from earlier versions
 of this repository should not be cited.
 
 ## Questions
@@ -97,6 +97,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 | True-colour basemaps for Fig. 1 | `18_basemap_rgb.py` |
 | Sensitivity to the cut-off draw of non-source lakes | `19_cutoff_seeds.py` |
 | Figures and tables (R) | `20_figures.R`, `21_tables.R`, `22_maps.R` |
+| Before/after Sentinel-2 images of two recorded outbursts | `24_event_evidence.py` |
 | TIFF export for submission | `23_export_submission.py` |
 
 ### Reproducing the manuscript
@@ -105,13 +106,13 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 |---|---|---|
 | Fig. 1 | `Fig01_study_area` | `18_basemap_rgb.py`, `22_maps.R` |
 | Fig. 2 | `Fig02_inventory` | `20_figures.R` |
-| Fig. 3 | `Fig03_nn_distances` | `09_cv_folds.R`, `20_figures.R` |
+| Fig. 3 | `Fig09_event_evidence` | `24_event_evidence.py` |
 | Fig. 4 | `Fig04_model_performance` | `10_train_validate.py`, `20_figures.R` |
 | Fig. 5 | `Fig05_distance_learning` | `11_spatial_diagnostics.py`, `17_learning_curve.py`, `20_figures.R` |
 | Fig. 6 | `Fig06_transfer_ranks` | `10_train_validate.py`, `20_figures.R` |
-| Fig. 7 | `Fig07_applicability` | `11_spatial_diagnostics.py`, `22_maps.R` |
+| Fig. 7 | `Fig07_aoa_regions` | `11_spatial_diagnostics.py`, `22_maps.R` |
 | Fig. 8 | `Fig08_shap` | `15_shap.py`, `20_figures.R` |
-| Figs. 9-10 (appendix) | `FigA1_correlogram`, `FigA2_sensitivity` | `11_spatial_diagnostics.py`, `10_train_validate.py`, `20_figures.R` |
+| Figs. A.1-A.3 (appendix) | `Fig03_nn_distances`, `FigA1_correlogram`, `FigA2_sensitivity` | `09_cv_folds.R`, `11_spatial_diagnostics.py`, `10_train_validate.py`, `20_figures.R` |
 | Online Resource 1 | `OR1_map_<area>` | `22_maps.R` |
 | Tables 2-10 | `paper/tables/tab_*.tex` | `12_paper_stats.py`, `21_tables.R`, `validation/v5_inventory_compare.py` |
 

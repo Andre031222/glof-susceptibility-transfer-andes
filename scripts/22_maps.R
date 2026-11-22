@@ -387,8 +387,61 @@ satellite_figure <- function(glaciers, lakes) {
   invisible(out)
 }
 
+aoa_regions <- function() {
+  di_file <- file.path(models, "di_lakes.csv")
+  if (!file.exists(di_file)) return(invisible(NULL))
+  di <- read.csv(di_file)
+  di$inside <- tolower(as.character(di$inside_aoa)) %in% c("true", "1")
+  di$di_rel <- pmin(pmax(di$di / di$di_threshold, 0.05), 20)
+  key <- ifelse(di$analysis_region == "patagonia_npi", "patagonia_norte", di$analysis_region)
+  di$label <- ifelse(is.na(area_short[key]), nice_region(key), area_short[key])
+  ord <- aggregate(lat ~ label, di, median)
+  ord <- ord$label[order(-ord$lat)]
+  di$label <- factor(di$label, levels = rev(ord))
+  sm <- do.call(rbind, lapply(split(di, di$label), function(d)
+    data.frame(label = d$label[1], n = nrow(d), pos = sum(d$glof),
+               inside = 100 * mean(d$inside))))
+  sm$txt <- sprintf("%d %s, %d %s, %.0f%% inside", sm$n, ifelse(sm$n == 1, "lake", "lakes"),
+                    sm$pos, ifelse(sm$pos == 1, "source", "sources"), sm$inside)
+  set.seed(1)
+  di$y <- as.numeric(di$label) + runif(nrow(di), -0.28, 0.28)
+  src <- di[di$glof == 1, ]
+  p <- ggplot(di) +
+    annotate("rect", xmin = 1, xmax = 20, ymin = -Inf, ymax = Inf, fill = c_high, alpha = 0.06) +
+    geom_point(aes(di_rel, y, colour = inside), size = 0.45, alpha = 0.45, shape = 16) +
+    geom_boxplot(aes(di_rel, as.numeric(label), group = label), width = 0.5, outlier.shape = NA,
+                 fill = NA, colour = "grey15", linewidth = 0.3, orientation = "y") +
+    geom_point(data = src, aes(di_rel, y), shape = 24, fill = "#ff2a6d", colour = "black",
+               size = 1.7, stroke = 0.3) +
+    geom_vline(xintercept = 1, linetype = "dashed", linewidth = 0.4) +
+    annotate("text", x = 1.08, y = length(ord) + 0.75, label = "AOA threshold", hjust = 0,
+             size = 2.85) +
+    annotate("text", x = 0.06, y = length(ord) + 0.75, label = "Inside the area of applicability",
+             hjust = 0, size = 2.85, colour = c_low) +
+    annotate("text", x = 19, y = length(ord) + 0.75, label = "Outside", hjust = 1, size = 2.85,
+             colour = c_high) +
+    geom_text(data = sm, aes(x = 26, y = as.numeric(label), label = txt), hjust = 0, size = 2.85,
+              colour = "grey20") +
+    scale_x_log10(breaks = c(0.1, 0.3, 1, 3, 10), labels = c("0.1", "0.3", "1", "3", "10")) +
+    scale_y_continuous(breaks = seq_along(levels(di$label)), labels = levels(di$label),
+                       expand = expansion(add = c(0.6, 1.1))) +
+    scale_colour_manual(values = c(`TRUE` = c_low, `FALSE` = c_high), guide = "none") +
+    coord_cartesian(xlim = c(0.05, 20), clip = "off") +
+    labs(x = "Dissimilarity index / AOA threshold (log scale)", y = NULL) +
+    theme_minimal(base_size = 9) +
+    theme(panel.grid.minor = element_blank(), panel.grid.major.y = element_blank(),
+          axis.text = element_text(size = 8), plot.margin = margin(5, 128, 5, 5))
+  out <- file.path(out_dir, "Fig07_aoa_regions.png")
+  ggsave(out, p, width = 6.85, height = 4.1, dpi = 600, bg = "white")
+  ggsave(sub("\\.png$", ".pdf", out), p, width = 6.85, height = 4.1, bg = "white",
+         device = if (capabilities("cairo")) cairo_pdf else "pdf")
+  message("  saved ", basename(out), " (png 600 dpi + pdf)")
+  invisible(out)
+}
+
 main <- function() {
   aoa_map()
+  aoa_regions()
   areas <- sub("_dem_utm\\.tif$", "", basename(Sys.glob(file.path(dem_dir, "*_dem_utm.tif"))))
   if (!length(areas)) {
     message("no DEMs found; run scripts/03_process_dem.py first")

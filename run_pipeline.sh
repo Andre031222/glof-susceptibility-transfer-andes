@@ -76,7 +76,8 @@ $PY scripts/18_basemap_rgb.py
 Rscript scripts/20_figures.R
 Rscript scripts/21_tables.R
 Rscript scripts/22_maps.R
-$PY scripts/23_export_submission.py
+$PY scripts/24_event_evidence.py
+$PY scripts/23_export_submission.py cea nh
 
 echo ""
 echo "=========================================="
@@ -84,5 +85,6 @@ echo " DONE"
 echo "   models/            folds, CV runs, OOF scores and diagnostics"
 echo "   paper/figures/     ggplot2 figures"
 echo "   paper/tables/      LaTeX table bodies"
-echo "   paper/submission/  Fig1-Fig10 TIFF at 600 dpi"
+echo "   paper/FINAL_CEA/figures/                 TIFF at 600 dpi (Elsevier numbering)"
+echo "   paper/planB_natural_hazards/figuras_tiff/  TIFF at 600 dpi (Springer numbering)"
 echo "=========================================="
