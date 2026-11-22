@@ -5,25 +5,22 @@ from PIL import Image
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 FIG_DIR = PROJECT_ROOT / 'paper' / 'figures'
+MAIN = [('Fig1', 'Fig01_study_area'), ('Fig2', 'Fig02_inventory'), ('Fig3', 'Fig09_event_evidence'),
+        ('Fig4', 'Fig04_model_performance'), ('Fig5', 'Fig05_distance_learning'), ('Fig6', 'Fig06_transfer_ranks'),
+        ('Fig7', 'Fig07_aoa_regions'), ('Fig8', 'Fig08_shap')]
+APPENDIX = ['Fig03_nn_distances', 'FigA1_correlogram', 'FigA2_sensitivity']
 TARGETS = {
-    'cea': (PROJECT_ROOT / 'paper' / 'FINAL_CEA' / 'figures',
-            [('Fig1', 'Fig01_study_area'), ('Fig2', 'Fig02_inventory'), ('Fig3', 'Fig09_event_evidence'),
-             ('Fig4', 'Fig04_model_performance'), ('Fig5', 'Fig05_distance_learning'),
-             ('Fig6', 'Fig06_transfer_ranks'), ('Fig7', 'Fig07_aoa_regions'), ('Fig8', 'Fig08_shap'),
-             ('FigA1', 'Fig03_nn_distances'), ('FigA2', 'FigA1_correlogram'), ('FigA3', 'FigA2_sensitivity')]),
-    'nh': (PROJECT_ROOT / 'paper' / 'planB_natural_hazards' / 'figuras_tiff',
-           [(f'Fig{i}', n) for i, n in enumerate(
-               ['Fig01_study_area', 'Fig02_inventory', 'Fig03_nn_distances', 'Fig04_model_performance',
-                'Fig05_distance_learning', 'Fig06_transfer_ranks', 'Fig07_applicability', 'Fig08_shap',
-                'FigA1_correlogram', 'FigA2_sensitivity'], start=1)]),
+    'nh': (PROJECT_ROOT / 'paper' / 'FINAL_NH' / 'figures',
+           MAIN + [(f'Fig{i}', n) for i, n in enumerate(APPENDIX, start=9)], 600),
+    'cea': (PROJECT_ROOT / 'paper' / 'alt_cea_elsevier' / 'FINAL' / 'figures',
+            MAIN + [(f'FigA{i}', n) for i, n in enumerate(APPENDIX, start=1)], 500),
 }
 DPI = 600
-PHOTO_DPI = 500
 PHOTOS = {'Fig01_study_area', 'Fig09_event_evidence'}
 
 
 def export(target):
-    out_dir, order = TARGETS[target]
+    out_dir, order, photo_dpi = TARGETS[target]
     out_dir.mkdir(parents=True, exist_ok=True)
     Image.MAX_IMAGE_PIXELS = None
     for label, name in order:
@@ -32,15 +29,15 @@ def export(target):
             sys.exit(f'[ERROR] {src} not found; run scripts/20_figures.R, 22_maps.R and 24_event_evidence.py first')
         img = Image.open(src).convert('RGB')
         if name in PHOTOS:
-            img = img.resize((round(img.width * PHOTO_DPI / DPI), round(img.height * PHOTO_DPI / DPI)),
+            img = img.resize((round(img.width * photo_dpi / DPI), round(img.height * photo_dpi / DPI)),
                              Image.LANCZOS)
             out = out_dir / f'{label}.jpg'
-            img.save(out, quality=95, dpi=(PHOTO_DPI, PHOTO_DPI))
-            img.save(FIG_DIR / f'{name}.jpg', quality=95, dpi=(PHOTO_DPI, PHOTO_DPI))
+            img.save(out, quality=95, dpi=(photo_dpi, photo_dpi))
+            img.save(FIG_DIR / f'{name}.jpg', quality=95, dpi=(photo_dpi, photo_dpi))
             stale = out.with_suffix('.tif')
             if stale.exists():
                 stale.unlink()
-            dpi = PHOTO_DPI
+            dpi = photo_dpi
         else:
             out = out_dir / f'{label}.tif'
             img.save(out, compression='tiff_lzw', dpi=(DPI, DPI))
@@ -50,7 +47,7 @@ def export(target):
 
 
 def main():
-    targets = sys.argv[1:] or ['cea']
+    targets = sys.argv[1:] or ['nh']
     for t in targets:
         if t not in TARGETS:
             sys.exit(f'unknown target {t}; use {", ".join(TARGETS)}')

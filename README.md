@@ -16,7 +16,7 @@ and years holds in others.
 ## Status
 
 The full pipeline was run on 1-2 November 2026 and produces every number, table and
-figure of the manuscript prepared for *Computers and Electronics in Agriculture*. Numbers from earlier versions
+figure of the manuscript prepared for *Natural Hazards*. Numbers from earlier versions
 of this repository should not be cited.
 
 ## Questions
@@ -112,7 +112,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 | Fig. 6 | `Fig06_transfer_ranks` | `10_train_validate.py`, `20_figures.R` |
 | Fig. 7 | `Fig07_aoa_regions` | `11_spatial_diagnostics.py`, `22_maps.R` |
 | Fig. 8 | `Fig08_shap` | `15_shap.py`, `20_figures.R` |
-| Figs. A.1-A.3 (appendix) | `Fig03_nn_distances`, `FigA1_correlogram`, `FigA2_sensitivity` | `09_cv_folds.R`, `11_spatial_diagnostics.py`, `10_train_validate.py`, `20_figures.R` |
+| Figs. 9-11 (appendix) | `Fig03_nn_distances`, `FigA1_correlogram`, `FigA2_sensitivity` | `09_cv_folds.R`, `11_spatial_diagnostics.py`, `10_train_validate.py`, `20_figures.R` |
 | Online Resource 1 | `OR1_map_<area>` | `22_maps.R` |
 | Tables 2-10 | `paper/tables/tab_*.tex` | `12_paper_stats.py`, `21_tables.R`, `validation/v5_inventory_compare.py` |
 
