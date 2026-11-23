@@ -1,5 +1,6 @@
 # Limits to the spatial transferability of a glacial lake outburst flood susceptibility model across the Andes
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24451531.svg)](https://doi.org/10.5281/zenodo.24451531)
 [![Status](https://img.shields.io/badge/Status-Manuscript_in_preparation-1565C0?style=flat-square)](#status)
 [![License: MIT](https://img.shields.io/badge/License-MIT-337AB7?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
@@ -166,7 +167,7 @@ R 4.6 with the packages and versions in `requirements_R.txt`.
 ## Maintainer
 
 [@Andre031222](https://github.com/Andre031222). The data and the code version used in the
-manuscript will be archived in Zenodo with a DOI.
+manuscript are archived in Zenodo: [doi:10.5281/zenodo.24451531](https://doi.org/10.5281/zenodo.24451531).
 
 ## License
 

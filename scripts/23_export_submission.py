@@ -5,7 +5,7 @@ from PIL import Image
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 FIG_DIR = PROJECT_ROOT / 'paper' / 'figures'
-MAIN = [('Fig1', 'Fig01_study_area'), ('Fig2', 'Fig02_inventory'), ('Fig3', 'Fig09_event_evidence'),
+MAIN = [('Fig1', 'Fig01_study_area'), ('Fig2', 'Fig09_event_evidence'), ('Fig3', 'Fig02_inventory'),
         ('Fig4', 'Fig04_model_performance'), ('Fig5', 'Fig05_distance_learning'), ('Fig6', 'Fig06_transfer_ranks'),
         ('Fig7', 'Fig07_aoa_regions'), ('Fig8', 'Fig08_shap')]
 APPENDIX = ['Fig03_nn_distances', 'FigA1_correlogram', 'FigA2_sensitivity']
@@ -33,7 +33,8 @@ def export(target):
                              Image.LANCZOS)
             out = out_dir / f'{label}.jpg'
             img.save(out, quality=95, dpi=(photo_dpi, photo_dpi))
-            img.save(FIG_DIR / f'{name}.jpg', quality=95, dpi=(photo_dpi, photo_dpi))
+            if target == 'nh':
+                img.save(FIG_DIR / f'{name}.jpg', quality=95, dpi=(photo_dpi, photo_dpi))
             stale = out.with_suffix('.tif')
             if stale.exists():
                 stale.unlink()
