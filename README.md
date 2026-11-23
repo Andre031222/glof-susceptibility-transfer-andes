@@ -1,7 +1,7 @@
 # Limits to the spatial transferability of a glacial lake outburst flood susceptibility model across the Andes
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24451531.svg)](https://doi.org/10.5281/zenodo.24451531)
-[![Status](https://img.shields.io/badge/Status-Under_review_(Natural_Hazards)-1565C0?style=flat-square)](#status)
+[![Status](https://img.shields.io/badge/Status-Submitted%2C_with_editor_(Natural_Hazards)-7B1FA2?style=flat-square)](#status)
 [![License: MIT](https://img.shields.io/badge/License-MIT-337AB7?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![R](https://img.shields.io/badge/Figures-R_%2F_ggplot2-276DC3?style=flat-square&logo=r&logoColor=white)](https://www.r-project.org/)
@@ -17,7 +17,7 @@ and years holds in others.
 ## Status
 
 The manuscript was submitted to *Natural Hazards* (Springer) on 22 November 2026 and is
-under review. The full pipeline was run on 1-2 November 2026 and produces every number,
+with the editor. The full pipeline was run on 1-2 November 2026 and produces every number,
 table and figure of the submitted manuscript. The data and the exact code version are
 archived in Zenodo ([doi:10.5281/zenodo.24451531](https://doi.org/10.5281/zenodo.24451531)).
 Numbers from earlier versions of this repository should not be cited.
